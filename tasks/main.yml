@@ -1,0 +1,18 @@
+---
+
+- name: Ensure ssh config directory exists
+  file: 
+    path:  "{{ ssh_config_ssh_dir }}"
+    owner: "{{ ssh_config_user }}"
+    group: "{{ ssh_config_group }}"
+    mode:  0700
+    state: directory
+
+- name: Create user ssh config file
+  template: 
+    src:   config.j2 
+    dest:  "{{ ssh_config_ssh_dir }}/config"
+    owner: "{{ ssh_config_user }}"
+    group: "{{ ssh_config_group }}"
+    mode:  0644
+  with_items: "{{ ssh_configs }}"

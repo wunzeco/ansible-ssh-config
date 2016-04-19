@@ -1,0 +1,35 @@
+---
+ssh_config_user:     
+ssh_config_group:    "{{ ssh_config_user|mandatory }}"     
+ssh_config_home_dir: "/home/{{ ssh_config_user|mandatory }}"
+ssh_config_ssh_dir: "{{ ssh_config_home_dir }}/.ssh"
+
+
+ssh_configs: []                 # See example below
+ssh_config_default: {}          # See example below
+
+
+#########################
+## Example Config
+##
+## ssh_configs:
+##   - name:     "DEV - Example LTD"
+##     Host:     "bastion.dev"
+##     Hostname: "bastion.dev.example.com"
+##     User:     "ubuntu"
+##     ForwardAgent: "yes"
+##   - Host: "*.dev.local"
+##     ProxyCommand: "ssh bastion.dev nc %h %p"
+##     IdentityFile: "~/.ssh/example.pem"
+##     User:         "ubuntu"
+##
+## ssh_config_default:
+##   ServerAliveInterval:    "60"
+##   ServerAliveCountMax:    "5"
+##   TCPKeepAlive:           "no"
+##   ControlMaster:          "auto"
+##   ControlPath:            "~/.ssh/%r@%h:%p"
+##   ControlPersist:         "2h"
+##   StrictHostKeyChecking:  "no"
+##   UserKnownHostsFile:     "/dev/null"
+  

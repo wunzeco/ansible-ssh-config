@@ -1,0 +1,36 @@
+---
+- hosts: test-kitchen
+
+
+  vars:
+    ssh_config_user: ogonna
+    ssh_config_default:
+      ServerAliveInterval:    "60"
+      ServerAliveCountMax:    "5"
+      TCPKeepAlive:           "no"
+      ControlMaster:          "auto"
+      ControlPath:            "~/.ssh/%r@%h:%p"
+      ControlPersist:         "2h"
+      StrictHostKeyChecking:  "no"
+      UserKnownHostsFile:     "/dev/null"
+    ssh_configs:
+      - name:     "DEV - Example LTD"
+        Host:     "bastion.dev"
+        Hostname: "bastion.dev.example.com"
+        User:     "ubuntu"
+        ForwardAgent: "yes"
+      - Host: "*.dev.local"
+        ProxyCommand: "ssh bastion.dev nc %h %p"
+        IdentityFile: "~/.ssh/example.pem"
+        User:         "ubuntu"
+
+  pre_tasks:
+    - name: "Create user"
+      user:
+        name: "{{ ssh_config_user }}"
+        home: "{{ ssh_config_home_dir }}"
+        createhome: yes
+        state: present
+
+  roles:
+    - ansible-ssh-config
