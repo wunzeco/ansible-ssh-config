@@ -13,7 +13,8 @@ Ansible role to configure user-specific ssh client config file.
 ## Examples
 
 The `ssh_configs` variable takes a list of ssh host config dicts. Keys of a
-config dict object are same as that of valid ssh settings. See example below.
+config dict object are same as that of valid ssh settings. 
+To add a comment above a ssh config, specify `name` key. See example below.
 
 ```
 - hosts: myhost
