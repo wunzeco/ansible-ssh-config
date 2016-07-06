@@ -16,3 +16,17 @@
     group: "{{ ssh_config_group }}"
     mode:  0644
   with_items: "{{ ssh_configs }}"
+
+- name: Configure .profile to start ssh-agent
+  lineinfile: 
+    dest:   "{{ ssh_config_home_dir }}/.profile"
+    regexp: '^eval.*ssh-agent'
+    line:   "eval $(ssh-agent -s) {{ '#' }} Start ssh-agent"
+    create: yes
+
+- name: Configure .profile to add private key identities to ssh-agent
+  lineinfile: 
+    dest:   "{{ ssh_config_home_dir }}/.profile"
+    regexp: '^ssh-add'
+    line:   "ssh-add $HOME/.ssh/*.pem {{ '#' }} Add private keys to ssh-agent"
+    create: yes
