@@ -17,7 +17,7 @@ Host {{ cfg.Host }}
     Hostname {{ cfg.Hostname }}
 {% endif -%}
 
-{% for key,value in cfg.iteritems() %}
+{% for key,value in cfg.items() %}
 {% if key == 'name' or key == 'Host' or key == 'Hostname' %}
 {# Already configured above so do nothing #}
 {% else %}
